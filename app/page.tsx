@@ -8,7 +8,7 @@ import { Navbar } from "./components/landing/Navbar";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-primary/20">
+    <main className="selection:bg-primary/20 min-h-screen bg-black text-white">
       <Navbar />
       <HeroSection />
       <PainPointSection />

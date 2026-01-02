@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
 
@@ -115,16 +116,16 @@ const ConnectionLine = ({
 
 export function HeroSection() {
   return (
-    <section className="relative w-full h-[95vh] md:h-screen flex flex-col items-center justify-center overflow-hidden bg-black text-white p-4">
+    <section className="relative flex h-[95vh] w-full flex-col items-center justify-center overflow-hidden bg-black p-4 text-white md:h-screen">
       {/* Background Ambience - Restored Orange Gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,100,0,0.08)_0%,transparent_60%)] pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-primary/20 blur-[150px] rounded-full opacity-50 pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,100,0,0.08)_0%,transparent_60%)]" />
+      <div className="bg-primary/20 pointer-events-none absolute top-0 left-1/2 h-[500px] w-full -translate-x-1/2 rounded-full opacity-50 blur-[150px]" />
 
       {/* Node Network Layer (SVG Overlay) */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 h-full w-full">
         {/* Render Lines first so they are behind dots */}
         <svg
-          className="w-full h-full"
+          className="h-full w-full"
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
         >
@@ -172,13 +173,13 @@ export function HeroSection() {
             {/* Dot */}
             <div className="relative">
               <span
-                className="absolute inset-0 rounded-full animate-ping opacity-20"
+                className="absolute inset-0 animate-ping rounded-full opacity-20"
                 style={{ backgroundColor: node.color }}
               />
-              <div className="w-3 h-3 rounded-full border border-white/20 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] bg-black" />
+              <div className="h-3 w-3 rounded-full border border-white/20 bg-black shadow-[0_0_10px_2px_rgba(255,255,255,0.1)]" />
               {/* Inner icon/color indicator */}
               <div
-                className="absolute inset-0 m-auto w-1 h-1 rounded-full"
+                className="absolute inset-0 m-auto h-1 w-1 rounded-full"
                 style={{ backgroundColor: node.color }}
               />
             </div>
@@ -188,7 +189,7 @@ export function HeroSection() {
               <div className="text-sm font-medium text-zinc-300">
                 {node.label}
               </div>
-              <div className="text-[10px] text-zinc-600 font-mono tracking-wider">
+              <div className="font-mono text-[10px] tracking-wider text-zinc-600">
                 CONNECTING...
               </div>
             </div>
@@ -197,16 +198,16 @@ export function HeroSection() {
       </div>
 
       {/* Main Content (Centered) */}
-      <div className="relative z-10 flex flex-col items-center text-center max-w-7xl mx-auto space-y-8 mt-20 md:mt-0">
+      <div className="relative z-10 mx-auto mt-20 flex max-w-7xl flex-col items-center space-y-8 text-center md:mt-0">
         {/* Pill Badge */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="glass px-4 py-1.5 rounded-full flex items-center gap-2 text-sm text-zinc-400 border border-white/10 hover:border-primary/40 transition-colors cursor-default"
+          className="glass hover:border-primary/40 flex cursor-default items-center gap-2 rounded-full border border-white/10 px-4 py-1.5 text-sm text-zinc-400 transition-colors"
         >
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_var(--color-primary)]" />
-          <span>Public Beta</span>
+          <span className="bg-primary h-2 w-2 animate-pulse rounded-full shadow-[0_0_8px_var(--color-primary)]" />
+          <span>Prediction market aggregation on steroids</span>
         </motion.div>
 
         {/* Headline */}
@@ -214,7 +215,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-6xl md:text-7xl font-bold tracking-tight text-zinc-500 drop-shadow-2xl"
+          className="text-6xl font-bold tracking-tight text-zinc-500 drop-shadow-2xl md:text-7xl"
         >
           The <span className="text-white">Entire</span> Prediction Market.
           <br />
@@ -226,10 +227,11 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg md:text-xl text-zinc-400 max-w-2xl leading-relaxed font-light"
+          className="max-w-2xl text-lg leading-relaxed font-light text-zinc-400 md:text-xl"
         >
-          Stop switching tabs. Discover, analyze, and trade across Polymarket,
-          Kalshi, and Crypto.com from a single, unified dashboard.
+          Stop switching tabs. Discover, analyze, and trade across several
+          prediction markets on different chains from a single, unified
+          dashboard.
         </motion.p>
 
         {/* CTAs */}
@@ -237,16 +239,26 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-6"
+          className="mt-6 flex w-full flex-col gap-4 sm:w-auto sm:flex-row"
         >
-          <button className="group relative px-8 py-3 bg-white/5 border border-white/10 rounded-full text-white font-medium hover:bg-white/10 transition-all">
+          <Link
+            href="/dashboard"
+            className="group relative rounded-full border border-white/10 bg-white/5 px-8 py-3 font-medium text-white transition-all hover:bg-white/10"
+          >
             <span className="flex items-center gap-2">
               Explore{" "}
-              <ArrowRight className="w-4 h-4 group-hover:-rotate-45 transition-transform" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:-rotate-45" />
             </span>
-          </button>
+          </Link>
 
-          <button className="px-8 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+          <button
+            onClick={() => {
+              document
+                .getElementById("pain-points")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="rounded-full bg-white px-8 py-3 font-semibold text-black shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all hover:bg-zinc-200"
+          >
             Learn More
           </button>
         </motion.div>

@@ -5,31 +5,31 @@ import { Mail } from "lucide-react";
 
 export function ComingSoonSection() {
   return (
-    <section className="w-full py-24 bg-linear-to-b from-black to-zinc-950 border-t border-white/5">
+    <section className="w-full border-t border-white/5 bg-linear-to-b from-black to-zinc-950 py-24">
       <div className="container mx-auto px-4 text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="mb-6 text-3xl font-bold text-white md:text-5xl">
             Coming Soon: The Ultimate Prediction Portfolio.
           </h2>
-          <p className="text-lg text-zinc-400 mb-10 leading-relaxed">
+          <p className="mb-10 text-lg leading-relaxed text-zinc-400">
             We’re building the first cross-chain portfolio manager. Track your
             wins, losses, and open positions across every platform in one place.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <div className="mx-auto flex max-w-md flex-col gap-4 sm:flex-row">
             <div className="relative grow">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
+              <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-zinc-500" />
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full bg-zinc-900 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
+                className="focus:border-primary/50 focus:ring-primary/50 w-full rounded-lg border border-white/10 bg-zinc-900 py-3 pr-4 pl-10 text-white transition-all focus:ring-1 focus:outline-none"
               />
             </div>
-            <button className="bg-white text-black font-semibold py-3 px-6 rounded-lg hover:bg-zinc-200 transition-colors whitespace-nowrap">
+            <button className="rounded-lg bg-white px-6 py-3 font-semibold whitespace-nowrap text-black transition-colors hover:bg-zinc-200">
               Get Early Access
             </button>
           </div>
-          <p className="text-xs text-zinc-600 mt-4">
+          <p className="mt-4 text-xs text-zinc-600">
             Join 2,000+ traders on the waitlist.
           </p>
         </div>

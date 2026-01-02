@@ -5,34 +5,34 @@ import { ArrowUpRight } from "lucide-react";
 
 export function Navbar() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-4 md:px-8">
-      <nav className="w-full max-w-7xl glass px-4 py-3 rounded-full flex items-center justify-between shadow-2xl bg-black/40 backdrop-blur-xl border border-white/10">
+    <header className="fixed top-0 right-0 left-0 z-50 flex justify-center px-4 py-4 md:px-8">
+      <nav className="glass flex w-full max-w-7xl items-center justify-between rounded-full border border-white/10 bg-black/40 px-4 py-3 shadow-2xl backdrop-blur-xl">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-white text-black rounded-full flex items-center justify-center font-bold text-lg group-hover:bg-primary transition-colors">
-            <span className="relative top-[1px]">D</span>
+        <Link href="/" className="group flex items-center gap-2">
+          <div className="group-hover:bg-primary flex h-8 w-8 items-center justify-center rounded-full bg-white text-lg font-bold text-black transition-colors">
+            <span className="relative top-px">D</span>
           </div>
-          <span className="font-bold text-xl tracking-tight text-white hidden sm:block">
+          <span className="hidden text-xl font-bold tracking-tight text-white sm:block">
             DYVE
           </span>
         </Link>
 
         {/* Links (Centered absolute on desktop or flex in middle) */}
         {/* Using absolute positioning to ensure perfect centering if no overlap, or just flex-1 justify-center */}
-        <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
-          <Link href="#" className="hover:text-white transition-colors">
+        <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 text-sm font-medium text-zinc-400 md:flex">
+          <Link href="#" className="transition-colors hover:text-white">
             Home
           </Link>
-          <Link href="#" className="hover:text-white transition-colors">
+          <Link href="#" className="transition-colors hover:text-white">
             DeFi App
           </Link>
-          <Link href="#" className="hover:text-white transition-colors">
+          <Link href="#" className="transition-colors hover:text-white">
             Assets
           </Link>
-          <Link href="#" className="hover:text-white transition-colors">
+          <Link href="#" className="transition-colors hover:text-white">
             Features
           </Link>
-          <Link href="#" className="hover:text-white transition-colors">
+          <Link href="#" className="transition-colors hover:text-white">
             Pricing
           </Link>
         </div>
@@ -41,9 +41,9 @@ export function Navbar() {
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard"
-            className="bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 border border-white/5"
+            className="flex items-center gap-2 rounded-full border border-white/5 bg-white/10 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-white/20"
           >
-            Dashboard <ArrowUpRight className="w-4 h-4 ml-0.5" />
+            Dashboard <ArrowUpRight className="ml-0.5 h-4 w-4" />
           </Link>
         </div>
       </nav>

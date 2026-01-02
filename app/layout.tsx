@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import { QueryClientWrapper } from "@/providers/QueryClientWrapper";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -21,9 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${outfit.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${outfit.variable} bg-background text-foreground font-sans antialiased`}
       >
-        {children}
+        <QueryClientWrapper>{children}</QueryClientWrapper>
       </body>
     </html>
   );
