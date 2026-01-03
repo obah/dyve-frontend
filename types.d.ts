@@ -1,17 +1,23 @@
 type MarketSource = "polymarket" | "azuro" | "kalshi";
 
+interface IOutcome {
+  label: string;
+  probability: number;
+  price: number;
+}
+
 interface IUnifiedMarket {
   id: string;
   source: MarketSource;
   question: string;
-  outcomes: { label: string; probability: number; price: number }[];
+  outcomes: IOutcome[];
   volume: number;
   deadline?: Date;
   description: string;
   image: string;
 }
 
-interface IGammaPolymarketEvent {
+interface IUnifiedEvent {
   id: string;
   ticker: string;
   slug: string;
@@ -21,6 +27,7 @@ interface IGammaPolymarketEvent {
   image: string;
   markets: IUnifiedMarket[];
   source: MarketSource;
+  updatedAt: Date;
 }
 
 interface GammaPolymarketEventResponse {

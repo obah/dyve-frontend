@@ -11,11 +11,10 @@ import {
 } from "@/components/ui/tooltip";
 
 interface MarketCardProps {
-  market: any; // Using any for now to align with the mapped type in page.tsx
+  market: IUnifiedMarket;
 }
 
 export function MarketCard({ market }: MarketCardProps) {
-  // Random Arbitrage Logic for Demo
   const hasArbitrage = Math.random() > 0.7;
   const arbApps = ["Kalshi", "Polymarket", "Gnosis"].filter(
     () => Math.random() > 0.5,
@@ -27,13 +26,14 @@ export function MarketCard({ market }: MarketCardProps) {
       animate={{ opacity: 1, y: 0 }}
       className="group hover:border-primary/20 relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-white/5 bg-zinc-900/40 transition-all hover:bg-zinc-900/60"
     >
-      {/* Image Header */}
       <div className="relative h-32 w-full overflow-hidden bg-zinc-800">
         {market.image ? (
-          <img
+          <Image
             src={market.image}
             alt={market.question}
             className="h-full w-full object-cover opacity-60 transition-opacity group-hover:opacity-80"
+            width={500}
+            height={500}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-zinc-800 to-black p-4">
@@ -43,16 +43,13 @@ export function MarketCard({ market }: MarketCardProps) {
           </div>
         )}
 
-        {/* App Icon Badge */}
         <div className="absolute top-2 right-2 rounded border border-white/10 bg-black/60 p-1 backdrop-blur">
-          {/* Placeholder Icon */}
           <div
             className="h-4 w-4 rounded-full bg-blue-500"
             title={market.source}
           />
         </div>
 
-        {/* Arbitrage Badge */}
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -73,15 +70,13 @@ export function MarketCard({ market }: MarketCardProps) {
         </TooltipProvider>
       </div>
 
-      {/* Content */}
       <div className="flex grow flex-col p-4">
-        <h3 className="group-hover:text-primary mb-4 line-clamp-2 min-h-[3rem] font-medium text-white transition-colors">
+        <h3 className="group-hover:text-primary mb-4 line-clamp-2 min-h-12 font-medium text-white transition-colors">
           {market.question}
         </h3>
 
-        {/* Outcomes */}
         <div className="mt-auto space-y-2">
-          {market.outcomes.slice(0, 2).map((outcome: any, idx: number) => (
+          {market.outcomes.slice(0, 2).map((outcome: IOutcome, idx: number) => (
             <div
               key={idx}
               className="flex items-center justify-between text-sm"
@@ -107,7 +102,6 @@ export function MarketCard({ market }: MarketCardProps) {
         </div>
       </div>
 
-      {/* Footer Info */}
       <div className="flex items-center justify-between border-t border-white/5 bg-white/2 px-4 py-3 text-xs text-zinc-600">
         <span>Vol: ${(market.volume / 1000).toFixed(1)}k</span>
         <span>
