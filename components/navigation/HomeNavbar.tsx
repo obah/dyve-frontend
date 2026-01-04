@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-export function Navbar() {
+export function HomeNavbar() {
   return (
     <header className="fixed top-0 right-0 left-0 z-50 flex justify-center px-4 py-4 md:px-8">
       <nav className="glass flex w-full max-w-7xl items-center justify-between rounded-full border border-white/10 bg-black/40 px-4 py-3 shadow-2xl backdrop-blur-xl">
-        {/* Logo */}
         <Link href="/" className="group flex items-center gap-2">
           <div className="group-hover:bg-primary flex h-8 w-8 items-center justify-center rounded-full bg-white text-lg font-bold text-black transition-colors">
             <span className="relative top-px">D</span>
@@ -17,8 +16,6 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* Links (Centered absolute on desktop or flex in middle) */}
-        {/* Using absolute positioning to ensure perfect centering if no overlap, or just flex-1 justify-center */}
         <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 text-sm font-medium text-zinc-400 md:flex">
           <Link href="#" className="transition-colors hover:text-white">
             Home
@@ -37,7 +34,6 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* CTA */}
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard"

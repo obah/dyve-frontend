@@ -9,16 +9,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Icons } from "../icons";
+import { Button } from "../ui/button";
 
 interface MarketCardProps {
   market: IUnifiedMarket;
 }
 
 export function MarketCard({ market }: MarketCardProps) {
-  const hasArbitrage = Math.random() > 0.7;
-  const arbApps = ["Kalshi", "Polymarket", "Gnosis"].filter(
-    () => Math.random() > 0.5,
-  );
+  // const hasArbitrage = Math.random() > 0.7;
+  // const arbApps = ["Kalshi", "Polymarket", "Gnosis"].filter(
+  //   () => Math.random() > 0.5,
+  // );
 
   return (
     <motion.div
@@ -43,14 +45,11 @@ export function MarketCard({ market }: MarketCardProps) {
           </div>
         )}
 
-        <div className="absolute top-2 right-2 rounded border border-white/10 bg-black/60 p-1 backdrop-blur">
-          <div
-            className="h-4 w-4 rounded-full bg-blue-500"
-            title={market.source}
-          />
+        <div className="absolute top-2 right-2 rounded-lg border border-white/10 bg-black/60 p-1 backdrop-blur">
+          <AppIconTooltip app={market.source} />
         </div>
 
-        <TooltipProvider>
+        {/* <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <div
@@ -67,7 +66,7 @@ export function MarketCard({ market }: MarketCardProps) {
               )}
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider> */}
       </div>
 
       <div className="flex grow flex-col p-4">
@@ -75,23 +74,25 @@ export function MarketCard({ market }: MarketCardProps) {
           {market.question}
         </h3>
 
-        <div className="mt-auto space-y-2">
-          {market.outcomes.slice(0, 2).map((outcome: IOutcome, idx: number) => (
-            <div
-              key={idx}
-              className="flex items-center justify-between text-sm"
-            >
-              <span className="max-w-[60%] truncate text-zinc-400">
-                {outcome.label}
-              </span>
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-white">
-                  {outcome.probability.toFixed(0)}%
+        <div className="mt-auto flex items-center justify-between gap-2">
+          {market.outcomes.slice(0, 2).map((outcome: IOutcome) => (
+            <div key={outcome.label} className="w-full space-y-1">
+              <Button
+                variant={
+                  outcome.label.toLowerCase() === "yes"
+                    ? "default"
+                    : "secondary"
+                }
+                className="group/btn w-full rounded"
+              >
+                <span className="group-hover/btn:hidden">{outcome.label}</span>
+                <span className="hidden text-white group-hover/btn:inline">
+                  ¢{outcome.price.toFixed(2)}
                 </span>
-                <span className="text-primary/80 font-mono text-xs">
-                  ${outcome.price.toFixed(2)}
-                </span>
-              </div>
+              </Button>
+              <p className="text-center font-mono text-xs text-white">
+                {outcome.probability.toFixed(0)}%
+              </p>
             </div>
           ))}
           {market.outcomes.length > 2 && (
@@ -105,11 +106,35 @@ export function MarketCard({ market }: MarketCardProps) {
       <div className="flex items-center justify-between border-t border-white/5 bg-white/2 px-4 py-3 text-xs text-zinc-600">
         <span>Vol: ${(market.volume / 1000).toFixed(1)}k</span>
         <span>
+          Close:{" "}
           {market.deadline
             ? new Date(market.deadline).toLocaleDateString()
             : "No Deadline"}
         </span>
       </div>
     </motion.div>
+  );
+}
+
+function AppIconTooltip({ app }: { app: string }) {
+  const getAppIcon = (app: string) => {
+    switch (app.toLowerCase()) {
+      case "polymarket":
+        return <Icons.polymarketBlueWhiteIcon className="h-4 w-4" />;
+
+      default:
+        return <div className="h-4 w-4 rounded-full bg-blue-500" title={app} />;
+    }
+  };
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>{getAppIcon(app)}</TooltipTrigger>
+        <TooltipContent className="border-primary text-primary border">
+          {app}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

@@ -9,9 +9,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Dyve - The Entire Prediction Market. One Interface.",
-  description:
-    "Stop switching tabs. Discover, analyze, and trade across Polymarket, Kalshi, and Crypto.com from a single, unified dashboard.",
+  title: "Dyve",
+  description: "The Prediction Market Aggregator",
 };
 
 export default function RootLayout({

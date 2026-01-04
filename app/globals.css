@@ -88,12 +88,19 @@
 /* Glassmorphism Utilities */
 @layer utilities {
   .glass {
-    @apply bg-white/5 backdrop-blur-md border border-white/10;
+    @apply border border-white/10 bg-white/5 backdrop-blur-md;
   }
   .glass-card {
-    @apply bg-zinc-900/50 backdrop-blur-xl border border-white/5 shadow-xl;
+    @apply border border-white/5 bg-zinc-900/50 shadow-xl backdrop-blur-xl;
   }
   .text-glow {
     text-shadow: 0 0 20px var(--color-primary);
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-import { DashboardFilters } from "../components/dashboard/DashboardFilters";
-import { MarketCard } from "../components/dashboard/MarketCard";
-import { Navbar } from "../components/landing/Navbar";
+import { DashboardFilters } from "../../components/dashboard/DashboardFilters";
+import { MarketCard } from "../../components/dashboard/MarketCard";
 import { useGetEventsByCategory } from "@/hooks/useGetEventsByCategory";
+import { DashboardNavbar } from "../../components/navigation/DashboardNavbar";
 
 export default function Dashboard() {
   // State
@@ -22,20 +22,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (eventsData) {
-      // 1. Flatten markets from all events in the category
-      // 2. Filter by selected event (if any)
-      // 3. Filter by selected apps
-      // 4. Filter by search query
-
       let filtered = eventsData.flatMap((event: IUnifiedEvent) => {
-        // Filter by Event Selection
         if (selectedEvent && event.id !== selectedEvent) return [];
 
-        // Attach Source to market for app filtering (if not already present on market)
         return event.markets.map((m) => ({ ...m, source: event.source }));
       });
 
-      // Filter by Apps (Source)
       if (selectedApps.length > 0) {
         filtered = filtered.filter((m: IUnifiedMarket) =>
           selectedApps.some(
@@ -44,7 +36,6 @@ export default function Dashboard() {
         );
       }
 
-      // Filter by Search
       if (searchQuery) {
         const lowerQuery = searchQuery.toLowerCase();
         filtered = filtered.filter((m: IUnifiedMarket) =>
@@ -64,7 +55,7 @@ export default function Dashboard() {
 
   return (
     <main className="selection:bg-primary/20 min-h-screen bg-black text-white">
-      <Navbar />
+      <DashboardNavbar />
 
       <div className="pt-24 pb-20">
         <DashboardFilters
@@ -83,7 +74,7 @@ export default function Dashboard() {
 
         <div className="container mx-auto mb-4 px-4 py-10">
           <h1 className="mb-2 text-4xl font-bold tracking-tight text-white capitalize">
-            {selectedCategory.replace("_", " ")} Feed
+            Your Feed
           </h1>
           <p className="text-zinc-500">
             Discover, analyze, and maximize your earnings on your predictions.
