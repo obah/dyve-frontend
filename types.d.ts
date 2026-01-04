@@ -28,6 +28,7 @@ interface IUnifiedEvent {
   markets: IUnifiedMarket[];
   source: MarketSource;
   updatedAt: Date;
+  categories: { id: string; label: string; slug: string }[];
 }
 
 interface GammaPolymarketEventResponse {

@@ -6,10 +6,18 @@ export async function upsertEvents(events: IUnifiedEvent[]) {
   for (const event of events) {
     const key = `event:${event.source}:${event.id}`;
 
-    pipeline.set(key, JSON.stringify(event), "EX", 60 * 60);
+    pipeline.set(key, JSON.stringify(event));
 
     pipeline.sadd(`events:${event.source}:active`, key);
     pipeline.sadd("events:all", key);
+
+    if (event.categories) {
+      for (const cat of event.categories) {
+        pipeline.sadd(`events:category:${cat.slug}`, key);
+        // Add to a set of all known categories to fetch later
+        pipeline.sadd("categories:all", JSON.stringify(cat));
+      }
+    }
   }
 
   await pipeline.exec();
