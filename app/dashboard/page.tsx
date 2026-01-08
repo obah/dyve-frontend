@@ -8,7 +8,6 @@ import { useGetEventsByCategory } from "@/hooks/useGetEventsByCategory";
 import { DashboardNavbar } from "../../components/navigation/DashboardNavbar";
 
 export default function Dashboard() {
-  // State
   const [selectedCategory, setSelectedCategory] = useState("featured");
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
   const [selectedApps, setSelectedApps] = useState<string[]>(["Polymarket"]);
@@ -16,7 +15,6 @@ export default function Dashboard() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [markets, setMarkets] = useState<IUnifiedMarket[]>([]);
 
-  // Fetch events based on category
   const { data: eventsData, isLoading } =
     useGetEventsByCategory(selectedCategory);
 

@@ -75,26 +75,33 @@ export function MarketCard({ market }: MarketCardProps) {
         </h3>
 
         <div className="mt-auto flex items-center justify-between gap-2">
-          {market.outcomes.slice(0, 2).map((outcome: IOutcome) => (
-            <div key={outcome.label} className="w-full space-y-1">
-              <Button
-                variant={
-                  outcome.label.toLowerCase() === "yes"
-                    ? "default"
-                    : "secondary"
-                }
-                className="group/btn w-full rounded"
+          {market.outcomes
+            .slice(0, 2)
+            .map((outcome: IOutcome, index: number) => (
+              <div
+                key={`${outcome.label}-${index}`}
+                className="w-full space-y-1"
               >
-                <span className="group-hover/btn:hidden">{outcome.label}</span>
-                <span className="hidden text-white group-hover/btn:inline">
-                  ¢{outcome.price.toFixed(2)}
-                </span>
-              </Button>
-              <p className="text-center font-mono text-xs text-white">
-                {outcome.probability.toFixed(0)}%
-              </p>
-            </div>
-          ))}
+                <Button
+                  variant={
+                    outcome.label.toLowerCase() === "yes"
+                      ? "default"
+                      : "secondary"
+                  }
+                  className="group/btn w-full rounded"
+                >
+                  <span className="group-hover/btn:hidden">
+                    {outcome.label}
+                  </span>
+                  <span className="hidden text-white group-hover/btn:inline">
+                    ¢{outcome.price.toFixed(2)}
+                  </span>
+                </Button>
+                <p className="text-center font-mono text-xs text-white">
+                  {outcome.probability.toFixed(0)}%
+                </p>
+              </div>
+            ))}
           {market.outcomes.length > 2 && (
             <div className="pt-1 text-xs text-zinc-600">
               +{market.outcomes.length - 2} more outcomes

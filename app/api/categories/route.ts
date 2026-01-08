@@ -5,30 +5,59 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const categoriesJson = await redis.smembers("categories:all");
-    const categories = categoriesJson.map((c) => JSON.parse(c));
+    const slugs = await redis.smembers("categories:all");
 
-    // Remove duplicates based on slug
-    const uniqueCategories = Array.from(
-      new Map(categories.map((c: any) => [c.slug, c])).values(),
-    ) as { id: string; label: string; slug: string }[];
+    if (!slugs.length) {
+      return NextResponse.json([]);
+    }
 
-    // Check event counts for each category pipeline
+    // Pipeline to fetch category details (stored as strings/JSON) AND counts
     const pipeline = redis.pipeline();
-    uniqueCategories.forEach((cat) => {
-      pipeline.scard(`events:category:${cat.slug}`);
+    slugs.forEach((slug) => {
+      pipeline.get(`category:${slug}`);
+      // Check intersection with active sets to ensure we only show categories with ACTIVE data
+      pipeline.sinter(`events:category:${slug}`, "events:polymarket:active");
+      pipeline.sinter(`events:category:${slug}`, "events:kalshi:active");
     });
+
     const results = await pipeline.exec();
 
-    // Filter categories that have at least one event
-    const nonEmptyCategories = uniqueCategories
-      .filter((_, index) => {
-        const count = results?.[index]?.[1] as number;
-        return count > 0;
-      })
-      .sort((a, b) => a.label.localeCompare(b.label));
+    const categories: { id: string; label: string; slug: string }[] = [];
 
-    return NextResponse.json(nonEmptyCategories);
+    // Results are interleaved: [categoryData, pmActiveKeys, kActiveKeys...]
+    // Step is 3
+    for (let i = 0; i < results.length; i += 3) {
+      const catData = results[i];
+      const pmKeys = results[i + 1] as string[];
+      const kKeys = results[i + 2] as string[];
+
+      const count = (pmKeys?.length || 0) + (kKeys?.length || 0);
+
+      if (count > 0 && catData) {
+        // Handle Upstash auto-parsing or string parsing
+        let category;
+        if (typeof catData === "object") {
+          category = catData;
+        } else {
+          try {
+            category = JSON.parse(catData as string);
+          } catch (e) {
+            console.error(
+              `Failed to parse category data for index ${i}`,
+              catData,
+            );
+            continue;
+          }
+        }
+        categories.push(category);
+      }
+    }
+
+    const sortedCategories = categories.sort((a, b) =>
+      a.label.localeCompare(b.label),
+    );
+
+    return NextResponse.json(sortedCategories);
   } catch (error) {
     console.error("Error fetching categories:", error);
     return NextResponse.json(

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 
-const APPS = ["Polymarket", "Kalshi", "Azuro", "Gnosis"];
+const APPS = ["Polymarket", "Kalshi"];
 const CUSTOM_CATEGORIES = [
   { label: "Featured", slug: "featured" },
   { label: "New", slug: "new" },
@@ -42,7 +42,6 @@ export function DashboardFilters({
 }: DashboardFiltersProps) {
   const { data: liveCategories } = useGetCategories();
 
-  // Scroll Container Logic
   const categoriesRef = useRef<HTMLDivElement>(null);
   const eventsRef = useRef<HTMLDivElement>(null);
 
@@ -50,6 +49,7 @@ export function DashboardFilters({
     left: false,
     right: false,
   });
+
   const [eventsScroll, setEventsScroll] = useState({
     left: false,
     right: false,
@@ -210,26 +210,29 @@ export function DashboardFilters({
             className="scrollbar-hide flex items-center gap-1 overflow-x-scroll border-b border-white/5 pb-1"
           >
             {liveCategories
-              ?.filter(
-                (cat) => cat.slug !== "featured" && cat.slug !== "closing_soon",
-              )
-              .map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    setSelectedCategory(cat.slug);
-                    setSelectedEvent(null);
-                  }}
-                  className={cn(
-                    "border-b-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
-                    selectedCategory === cat.slug
-                      ? "border-primary text-white"
-                      : "border-transparent text-zinc-500 hover:text-zinc-300",
-                  )}
-                >
-                  {cat.label}
-                </button>
-              ))}
+              ? liveCategories
+                  .filter(
+                    (cat) =>
+                      cat.slug !== "featured" && cat.slug !== "closing_soon",
+                  )
+                  .map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => {
+                        setSelectedCategory(cat.slug);
+                        setSelectedEvent(null);
+                      }}
+                      className={cn(
+                        "border-b-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+                        selectedCategory === cat.slug
+                          ? "border-primary text-white"
+                          : "border-transparent text-zinc-500 hover:text-zinc-300",
+                      )}
+                    >
+                      {cat.label}
+                    </button>
+                  ))
+              : []}
           </div>
 
           {categoriesScroll.right && (
@@ -242,7 +245,6 @@ export function DashboardFilters({
           )}
         </div>
 
-        {/* Row 3: Events List (Horizontal Scroll) */}
         {events.length > 0 && (
           <div className="group/events relative">
             {eventsScroll.left && (

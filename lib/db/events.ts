@@ -14,15 +14,29 @@ export async function getActiveEvents(
 
   const keys = await redis.smembers(setKey);
 
-  if (!keys.length) return [];
+  let filteredKeys = keys;
+  if (source) {
+    filteredKeys = keys.filter((k) => k.includes(`:${source}:`));
+  }
+
+  if (!filteredKeys.length) return [];
 
   const pipeline = redis.pipeline();
-  keys.forEach((k) => pipeline.get(k));
+  filteredKeys.forEach((k) => pipeline.get(k));
   const results = await pipeline.exec();
 
   if (!results) return [];
 
   return results
-    .map(([_, val]) => val && JSON.parse(val as string))
+    .map((val) => {
+      if (!val) return null;
+      if (typeof val === "object") return val;
+      try {
+        return JSON.parse(val as string);
+      } catch (e) {
+        console.error("Failed to parse event:", val);
+        return null;
+      }
+    })
     .filter(Boolean);
 }

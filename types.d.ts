@@ -218,3 +218,88 @@ interface GammaPolymarketTag {
   isCarousel?: boolean;
   forceHide?: boolean;
 }
+
+interface KalshiMarketsResponse {
+  cursor: string;
+  markets: KalshiMarkets[];
+}
+
+interface KalshiMarkets {
+  can_close_early: boolean;
+  category: string;
+  close_time: Date;
+  created_time: Date;
+  custom_strike: KalshiCustomStrike;
+  event_ticker: string;
+  expected_expiration_time: Date;
+  expiration_time: Date;
+  expiration_value: string;
+  last_price: number;
+  last_price_dollars: string;
+  latest_expiration_time: Date;
+  liquidity: number;
+  liquidity_dollars: string;
+  market_type: string;
+  mve_collection_ticker: string;
+  mve_selected_legs: KalshiMveSelectedLeg[];
+  no_ask: number;
+  no_ask_dollars: string;
+  no_bid: number;
+  no_bid_dollars: string;
+  no_sub_title: string;
+  notional_value: number;
+  notional_value_dollars: string;
+  open_interest: number;
+  open_time: Date;
+  previous_price: number;
+  previous_price_dollars: string;
+  previous_yes_ask: number;
+  previous_yes_ask_dollars: string;
+  previous_yes_bid: number;
+  previous_yes_bid_dollars: string;
+  price_level_structure: string;
+  price_ranges: KalshiPriceRange[];
+  response_price_units: string;
+  result: string;
+  risk_limit_cents: number;
+  rules_primary: string;
+  rules_secondary: string;
+  settlement_timer_seconds: number;
+  status: string;
+  strike_type: string;
+  subtitle: string;
+  tick_size: number;
+  ticker: string;
+  title: string;
+  volume: number;
+  volume_24h: number;
+  yes_ask: number;
+  yes_ask_dollars: string;
+  yes_bid: number;
+  yes_bid_dollars: string;
+  yes_sub_title: string;
+}
+
+interface KalshiCustomStrike {
+  "Associated Events": string;
+  "Associated Market Sides": string;
+  "Associated Markets": string;
+  "Multivariate Event Ticker": string;
+}
+
+interface KalshiMveSelectedLeg {
+  event_ticker: string;
+  market_ticker: string;
+  side: MarketSide;
+}
+
+enum MarketSide {
+  No = "no",
+  Yes = "yes",
+}
+
+interface KalshiPriceRange {
+  end: string;
+  start: string;
+  step: string;
+}
