@@ -219,17 +219,34 @@ interface GammaPolymarketTag {
   forceHide?: boolean;
 }
 
-interface KalshiMarketsResponse {
+interface KalshiEventsResponse {
   cursor: string;
-  markets: KalshiMarkets[];
+  events: KalshiEvent[];
+  milestones: any[];
 }
 
-interface KalshiMarkets {
+interface KalshiEvent {
+  available_on_brokers?: boolean;
+  category?: string;
+  collateral_return_type?: string;
+  event_ticker?: string;
+  mutually_exclusive?: boolean;
+  series_ticker?: string;
+  strike_period?: string;
+  sub_title?: string;
+  title?: string;
+}
+
+interface KalshiEventMarketsResponse {
+  event: KalshiEvent;
+  markets: KalshiMarket[];
+}
+
+interface KalshiMarket {
   can_close_early: boolean;
-  category: string;
   close_time: Date;
   created_time: Date;
-  custom_strike: KalshiCustomStrike;
+  early_close_condition: string;
   event_ticker: string;
   expected_expiration_time: Date;
   expiration_time: Date;
@@ -240,8 +257,6 @@ interface KalshiMarkets {
   liquidity: number;
   liquidity_dollars: string;
   market_type: string;
-  mve_collection_ticker: string;
-  mve_selected_legs: KalshiMveSelectedLeg[];
   no_ask: number;
   no_ask_dollars: string;
   no_bid: number;
@@ -261,12 +276,10 @@ interface KalshiMarkets {
   price_ranges: KalshiPriceRange[];
   response_price_units: string;
   result: string;
-  risk_limit_cents: number;
   rules_primary: string;
   rules_secondary: string;
   settlement_timer_seconds: number;
   status: string;
-  strike_type: string;
   subtitle: string;
   tick_size: number;
   ticker: string;
@@ -278,24 +291,6 @@ interface KalshiMarkets {
   yes_bid: number;
   yes_bid_dollars: string;
   yes_sub_title: string;
-}
-
-interface KalshiCustomStrike {
-  "Associated Events": string;
-  "Associated Market Sides": string;
-  "Associated Markets": string;
-  "Multivariate Event Ticker": string;
-}
-
-interface KalshiMveSelectedLeg {
-  event_ticker: string;
-  market_ticker: string;
-  side: MarketSide;
-}
-
-enum MarketSide {
-  No = "no",
-  Yes = "yes",
 }
 
 interface KalshiPriceRange {

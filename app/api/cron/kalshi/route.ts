@@ -109,23 +109,64 @@ export async function GET() {
 
  */
 
+/**
+ * FETCH all events from - https://api.elections.kalshi.com/trade-api/v2/events?limit=50&status=open
+ * then get each event's ticker
+ * then fetch each event's markets from - https://api.elections.kalshi.com/trade-api/v2/events/{event_ticker}
+ * then normalize each market
+ * and upsert each market
+ */
+
 import { NextResponse } from "next/server";
 import { normalizeKalshiMarket } from "@/lib/normalize/kalshi";
 import { upsertEvents } from "@/lib/db/upsertEvents";
 
-const KALSHI_API_URL =
-  "https://api.elections.kalshi.com/trade-api/v2/markets?limit=100";
+const KALSHI_ALL_EVENTS_API_URL =
+  "https://api.elections.kalshi.com/trade-api/v2/events?limit=50&status=open";
+const KALSHI_EVENT_MARKETS_API_URL =
+  "https://api.elections.kalshi.com/trade-api/v2/events/";
 
 export async function GET() {
   try {
-    const data = await fetch(KALSHI_API_URL);
-    const markets = await data.json();
-    const normalized = markets.markets.map(normalizeKalshiMarket);
-    await upsertEvents(normalized);
+    const data = await fetch(KALSHI_ALL_EVENTS_API_URL);
+    const { events }: KalshiEventsResponse = await data.json();
+
+    const unifiedEvents: IUnifiedEvent[] = [];
+
+    // Process events sequentially to respect potential rate limits and order
+    for (const event of events) {
+      if (!event.event_ticker) continue;
+
+      try {
+        const marketsRes = await fetch(
+          `${KALSHI_EVENT_MARKETS_API_URL}${event.event_ticker}`,
+        );
+        const { markets }: KalshiEventMarketsResponse = await marketsRes.json();
+
+        // Kalshi returns multiple markets per event
+        // We normalize EACH market as a separate "UnifiedEvent" because
+        // normalizeKalshiMarket treats a single Kalshi market as a UnifiedEvent
+        for (const market of markets) {
+          const unifiedEvent = normalizeKalshiMarket(market, event.category);
+          unifiedEvents.push(unifiedEvent);
+        }
+      } catch (err) {
+        console.error(
+          `Failed to fetch markets for event ${event.event_ticker}:`,
+          err,
+        );
+        // Continue to next event even if one fails
+      }
+    }
+
+    if (unifiedEvents.length > 0) {
+      await upsertEvents(unifiedEvents);
+    }
 
     return NextResponse.json({
-      status: "ok",
-      synced: markets.markets.length,
+      status: "success",
+      eventsProcessed: events.length,
+      marketsUpserted: unifiedEvents.length,
     });
   } catch (error) {
     console.error("Kalshi sync error:", error);

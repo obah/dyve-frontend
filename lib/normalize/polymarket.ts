@@ -44,13 +44,10 @@ export function normalizePolymarketEvent(
 }
 
 const CATEGORY_MAP: Record<string, string> = {
-  // movies
   movies: "movies",
   "box-office": "movies",
   hollywood: "movies",
   "best-of-2025": "movies",
-
-  // finance / economy
   finance: "finance",
   economy: "economy",
   business: "business",
@@ -58,36 +55,22 @@ const CATEGORY_MAP: Record<string, string> = {
   ipos: "finance",
   stocks: "stocks",
   "micro-strategy": "stocks",
-
-  // crypto
   crypto: "crypto",
   bitcoin: "crypto",
   ethereum: "crypto",
   solana: "crypto",
-
-  // politics
   politics: "politics",
   elections: "elections",
   primaries: "elections",
-
-  // general
   "2025-predictions": "2025-predictions",
-
-  // climate / weather
   climate: "climate",
   "global-warming": "climate",
   weather: "weather",
-
-  // science / tech
   science: "science",
   tech: "tech",
-
-  // geography
   france: "geography",
   italy: "geography",
   world: "world",
-
-  // Custom mappings for tags that might match our custom categories
   featured: "featured",
   "closing-soon": "closing_soon",
   trending: "featured",
