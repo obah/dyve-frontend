@@ -5,8 +5,8 @@ const CATEGORY_MAP: Record<string, string> = {
   economy: "economy",
   stocks: "stocks",
   crypto: "crypto",
-  climate: "climate",
-  weather: "weather",
+  climate: "climate and weather",
+  weather: "climate and weather",
   science: "science",
   tech: "tech",
   sports: "sports",
@@ -50,21 +50,25 @@ export function normalizeKalshiMarket(
   const unifiedMarket: IUnifiedMarket = {
     id: market.ticker,
     source: "kalshi",
-    question: market.title,
+    question: market.title
+      .toLowerCase()
+      .includes(market.yes_sub_title.toLowerCase())
+      ? market.title
+      : market.title + " - " + market.yes_sub_title,
     description: market.rules_primary || market.subtitle || "",
     image: "",
     volume: market.volume || 0,
     deadline: closeTime,
     outcomes: [
       {
-        label: market.yes_sub_title || "Yes",
+        label: "Yes",
         price: yesPrice,
-        probability: yesPrice * 100,
+        probability: yesPrice,
       },
       {
-        label: market.no_sub_title || "No",
+        label: "No",
         price: noPrice,
-        probability: noPrice * 100,
+        probability: noPrice,
       },
     ],
   };

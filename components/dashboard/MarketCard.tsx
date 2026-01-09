@@ -128,7 +128,12 @@ function AppIconTooltip({ app }: { app: string }) {
     switch (app.toLowerCase()) {
       case "polymarket":
         return <Icons.polymarketBlueWhiteIcon className="h-4 w-4" />;
-
+      case "kalshi":
+        return (
+          <div className="flex h-4 w-4 items-center justify-center bg-[#09C285] text-center text-black">
+            K
+          </div>
+        );
       default:
         return <div className="h-4 w-4 rounded-full bg-blue-500" title={app} />;
     }

@@ -63,9 +63,9 @@ const CATEGORY_MAP: Record<string, string> = {
   elections: "elections",
   primaries: "elections",
   "2025-predictions": "2025-predictions",
-  climate: "climate",
-  "global-warming": "climate",
-  weather: "weather",
+  climate: "climate and weather",
+  "global-warming": "climate and weather",
+  weather: "climate and weather",
   science: "science",
   tech: "tech",
   france: "geography",
@@ -90,7 +90,7 @@ function normalizePolymarketMarket(market: any): IUnifiedMarket {
     volume: Number(market.volume),
     outcomes: outcomes.map((label: string, i: number) => ({
       label,
-      price: Number(prices[i] ?? 0),
+      price: Number(prices[i] ?? 0) * 100,
       probability: Number(prices[i] ?? 0) * 100,
     })),
   };
