@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 
-const APPS = ["Polymarket", "Kalshi"];
+const APPS = ["Polymarket", "Kalshi", "Limitless"];
 const CUSTOM_CATEGORIES = [
   { label: "Featured", slug: "featured" },
   { label: "New", slug: "new" },
@@ -41,6 +41,10 @@ export function DashboardFilters({
   events,
 }: DashboardFiltersProps) {
   const { data: liveCategories } = useGetCategories();
+
+  useEffect(() => {
+    if (liveCategories) console.log("liveCategories", liveCategories);
+  }, [liveCategories]);
 
   const categoriesRef = useRef<HTMLDivElement>(null);
   const eventsRef = useRef<HTMLDivElement>(null);

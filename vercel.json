@@ -7,6 +7,10 @@
     {
       "path": "/api/cron/kalshi",
       "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/cron/limitless",
+      "schedule": "*/10 * * * *"
     }
   ]
 }

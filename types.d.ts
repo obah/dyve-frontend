@@ -1,4 +1,21 @@
-type MarketSource = "polymarket" | "azuro" | "kalshi";
+type MarketSource = "polymarket" | "limitless" | "kalshi" | "opinion";
+
+type DyveCategory =
+  | "politics"
+  | "finance"
+  | "economy"
+  | "crypto"
+  | "climate and weather"
+  | "science and tech"
+  | "sports"
+  | "world"
+  | "movies"
+  | "business"
+  | "featured"
+  | "closing_soon"
+  | "2025-predictions"
+  | "2026-predictions"
+  | "this vs that";
 
 interface IOutcome {
   label: string;
@@ -297,4 +314,143 @@ interface KalshiPriceRange {
   end: string;
   start: string;
   step: string;
+}
+
+interface ILimitlessCollateralToken {
+  symbol: string;
+  address: string;
+  decimals: number;
+}
+
+interface ILimitlessCreator {
+  link: string;
+  name: string;
+  imageURI: string;
+}
+
+interface ILimitlessSettings {
+  c: string;
+  minSize: string;
+  maxSpread: number;
+  dailyReward: string;
+  rewardsEpoch: string;
+}
+
+interface ILimitlessTokens {
+  no: string;
+  yes: string;
+}
+
+interface ILimitlessVenue {
+  adapter: null;
+  exchange: string;
+}
+
+interface ILimitlessMarketsCategoryCountResponse {
+  category: { [key: string]: number };
+  totalCount: number;
+}
+
+interface ILimitlessMarketsCategoryResponse {
+  data: ILimitlessMarketsCategoryData[];
+  totalMarketsCount: number;
+}
+
+interface ILimitlessMarketsCategoryData {
+  id: number;
+  conditionId?: string;
+  negRiskRequestId?: null;
+  description?: string;
+  collateralToken: ILimitlessCollateralToken;
+  title: string;
+  proxyTitle?: null;
+  expirationDate: string;
+  expirationTimestamp: number;
+  createdAt: Date;
+  updatedAt: Date;
+  categories: string[];
+  status: string;
+  expired: boolean;
+  creator: ILimitlessCreator;
+  tags: string[];
+  volume: string;
+  volumeFormatted: string;
+  tokens?: ILimitlessTokens;
+  prices?: number[];
+  isRewardable?: boolean;
+  slug: string;
+  tradeType: string;
+  venue: ILimitlessVenue | null;
+  marketType: string;
+  priorityIndex: number;
+  winningOutcomeIndex?: null;
+  metadata: ILimitlessCategoryMetadata;
+  trends?: ILimitlessTrends;
+  settings?: ILimitlessSettings;
+  logo?: null;
+  outcomeTokens?: string[];
+  ogImageURI?: string;
+  negRiskMarketId?: string;
+  markets?: ILimitlessMarket[];
+  dailyReward?: string;
+}
+
+interface ILimitlessMarket {
+  id: number;
+  conditionId: string;
+  negRiskRequestId: string;
+  description: string;
+  collateralToken: ILimitlessCollateralToken;
+  title: string;
+  proxyTitle: null;
+  expirationDate: string;
+  expirationTimestamp: number;
+  createdAt: Date;
+  updatedAt: Date;
+  categories: string[];
+  status: string;
+  expired: boolean;
+  creator: ILimitlessCreator;
+  tags: string[];
+  volume: string;
+  volumeFormatted: string;
+  tokens: ILimitlessTokens;
+  prices: number[];
+  isRewardable: boolean;
+  slug: string;
+  tradeType: string;
+  venue: ILimitlessVenue | null;
+  marketType: string;
+  priorityIndex: number;
+  winningOutcomeIndex: null;
+  metadata: ILimitlessMarketMetadata;
+  settings: ILimitlessSettings;
+  logo: null;
+}
+
+interface ILimitlessCategoryMetadata {
+  fee: boolean;
+  isBannered: boolean;
+  isPolyArbitrage: boolean;
+}
+
+interface ILimitlessTrends {
+  hourly: ILimitlessHourly;
+}
+
+interface ILimitlessHourly {
+  value: number;
+  rank: number;
+}
+
+interface ILimitlessSettings {
+  minSize: string;
+  maxSpread: number;
+  dailyReward: string;
+  rewardsEpoch: string;
+  c: string;
+}
+
+interface ILimitlessMarketMetadata {
+  fee: boolean;
 }

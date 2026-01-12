@@ -128,6 +128,8 @@ function AppIconTooltip({ app }: { app: string }) {
     switch (app.toLowerCase()) {
       case "polymarket":
         return <Icons.polymarketBlueWhiteIcon className="h-4 w-4" />;
+      case "limitless":
+        return <Icons.limitlessLogo className="h-4 w-4" />;
       case "kalshi":
         return (
           <div className="flex h-4 w-4 items-center justify-center bg-[#09C285] text-center text-black">
@@ -143,7 +145,7 @@ function AppIconTooltip({ app }: { app: string }) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>{getAppIcon(app)}</TooltipTrigger>
-        <TooltipContent className="border-primary text-primary border">
+        <TooltipContent className="border-primary text-primary border capitalize">
           {app}
         </TooltipContent>
       </Tooltip>

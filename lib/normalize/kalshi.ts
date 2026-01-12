@@ -1,14 +1,14 @@
-const CATEGORY_MAP: Record<string, string> = {
+const CATEGORY_MAP: Record<string, DyveCategory> = {
   politics: "politics",
-  elections: "elections",
+  elections: "politics",
   finance: "finance",
   economy: "economy",
-  stocks: "stocks",
+  stocks: "finance",
   crypto: "crypto",
   climate: "climate and weather",
   weather: "climate and weather",
-  science: "science",
-  tech: "tech",
+  science: "science and tech",
+  tech: "science and tech",
   sports: "sports",
   world: "world",
 };
