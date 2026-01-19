@@ -11,16 +11,24 @@ import {
 } from "@/components/ui/tooltip";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
+import { MarketBuyModal } from "./MarketBuyModal";
+import { useState } from "react";
 
 interface MarketCardProps {
   market: IUnifiedMarket;
 }
 
 export function MarketCard({ market }: MarketCardProps) {
-  // const hasArbitrage = Math.random() > 0.7;
-  // const arbApps = ["Kalshi", "Polymarket", "Gnosis"].filter(
-  //   () => Math.random() > 0.5,
-  // );
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedOutcome, setSelectedOutcome] = useState<IOutcome | null>(null);
+  /*
+   * Local state for modal visibility and selected outcome.
+   * Internal modal state (amount, contracts) is now handled inside MarketBuyModal.
+   */
+  const handleOpenBuy = (outcome: IOutcome) => {
+    setSelectedOutcome(outcome);
+    setIsDialogOpen(true);
+  };
 
   return (
     <motion.div
@@ -48,25 +56,6 @@ export function MarketCard({ market }: MarketCardProps) {
         <div className="absolute top-2 right-2 rounded-lg border border-white/10 bg-black/60 p-1 backdrop-blur">
           <AppIconTooltip app={market.source} />
         </div>
-
-        {/* <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div
-                className={`absolute top-2 left-2 rounded border bg-black/60 p-1.5 backdrop-blur ${hasArbitrage ? "border-green-500/50 text-green-400" : "border-zinc-700/50 text-zinc-600"}`}
-              >
-                <ArrowUpRight className="h-4 w-4" />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent className="border-white/10 bg-zinc-900 text-zinc-300">
-              {hasArbitrage ? (
-                <p>Arbitrage opportunity on: {arbApps.join(", ")}</p>
-              ) : (
-                <p>No arbitrage currently available</p>
-              )}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider> */}
       </div>
 
       <div className="flex grow flex-col p-4">
@@ -89,6 +78,10 @@ export function MarketCard({ market }: MarketCardProps) {
                       : "secondary"
                   }
                   className="group/btn w-full rounded"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpenBuy(outcome);
+                  }}
                 >
                   <span className="group-hover/btn:hidden">
                     {outcome.label}
@@ -119,6 +112,13 @@ export function MarketCard({ market }: MarketCardProps) {
             : "No Deadline"}
         </span>
       </div>
+      <MarketBuyModal
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        selectedOutcome={selectedOutcome}
+        allOutcomes={market.outcomes}
+        marketQuestion={market.question}
+      />
     </motion.div>
   );
 }

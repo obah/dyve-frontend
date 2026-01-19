@@ -42,10 +42,6 @@ export function DashboardFilters({
 }: DashboardFiltersProps) {
   const { data: liveCategories } = useGetCategories();
 
-  useEffect(() => {
-    if (liveCategories) console.log("liveCategories", liveCategories);
-  }, [liveCategories]);
-
   const categoriesRef = useRef<HTMLDivElement>(null);
   const eventsRef = useRef<HTMLDivElement>(null);
 
