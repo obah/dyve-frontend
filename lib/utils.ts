@@ -15,3 +15,16 @@ export function formatCurrency(amount: number): string {
     currency: "USD",
   }).format(amount);
 }
+
+export function marketBadgeVariant(market: string): TBadgeVariant {
+  switch (market.toLowerCase()) {
+    case "polymarket":
+      return "polymarket";
+    case "limitless":
+      return "limitless";
+    case "kalshi":
+      return "kalshi";
+    default:
+      return "default";
+  }
+}

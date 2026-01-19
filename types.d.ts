@@ -454,3 +454,25 @@ interface ILimitlessSettings {
 interface ILimitlessMarketMetadata {
   fee: boolean;
 }
+
+type TBadgeVariant =
+  | "default"
+  | "destructive"
+  | "outline"
+  | "secondary"
+  | "polymarket"
+  | "kalshi"
+  | "limitless";
+
+type PortfolioPosition = {
+  id: string;
+  event: string;
+  outcome: string;
+  cost: number;
+  potentialWinnings: number;
+  platform: string;
+  dateOpened: string;
+  previousProbability: number;
+  currentProbability: number;
+  isFromDyve: boolean;
+};
