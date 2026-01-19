@@ -28,8 +28,8 @@ const NODES = [
     labelAlign: "right",
   },
   {
-    id: "cortex",
-    label: "Cortex",
+    id: "limitless",
+    label: "Limitless",
     x: 15,
     y: 15,
     color: "#d946ef",
@@ -54,8 +54,8 @@ const NODES = [
     labelAlign: "left",
   },
   {
-    id: "quant",
-    label: "Quant",
+    id: "polygon",
+    label: "Polygon",
     x: 85,
     y: 15,
     color: "#f59e0b",
@@ -246,7 +246,7 @@ export function HeroSection() {
             className="group relative rounded-full border border-white/10 bg-white/5 px-8 py-3 font-medium text-white transition-all hover:bg-white/10"
           >
             <span className="flex items-center gap-2">
-              Explore{" "}
+              Open App{" "}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:-rotate-45" />
             </span>
           </Link>

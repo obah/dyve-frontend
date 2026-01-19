@@ -16,7 +16,7 @@ export function HomeNavbar() {
           </span>
         </Link>
 
-        <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 text-sm font-medium text-zinc-400 md:flex">
+        {/* <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 text-sm font-medium text-zinc-400 md:flex">
           <Link href="#" className="transition-colors hover:text-white">
             Home
           </Link>
@@ -32,14 +32,14 @@ export function HomeNavbar() {
           <Link href="#" className="transition-colors hover:text-white">
             Pricing
           </Link>
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard"
             className="flex items-center gap-2 rounded-full border border-white/5 bg-white/10 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-white/20"
           >
-            Dashboard <ArrowUpRight className="ml-0.5 h-4 w-4" />
+            Open App <ArrowUpRight className="ml-0.5 h-4 w-4" />
           </Link>
         </div>
       </nav>

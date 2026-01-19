@@ -52,52 +52,48 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="selection:bg-primary/20 min-h-screen bg-black text-white">
-      <DashboardNavbar />
+    <div>
+      <DashboardFilters
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        selectedEvent={selectedEvent}
+        setSelectedEvent={setSelectedEvent}
+        selectedApps={selectedApps}
+        setSelectedApps={setSelectedApps}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        favorites={favorites}
+        toggleFavorite={toggleFavorite}
+        events={eventsData || []}
+      />
 
-      <div className="pt-24 pb-20">
-        <DashboardFilters
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          selectedEvent={selectedEvent}
-          setSelectedEvent={setSelectedEvent}
-          selectedApps={selectedApps}
-          setSelectedApps={setSelectedApps}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          favorites={favorites}
-          toggleFavorite={toggleFavorite}
-          events={eventsData || []}
-        />
-
-        <div className="container mx-auto mb-4 px-4 py-10">
-          <h1 className="mb-2 text-4xl font-bold tracking-tight text-white capitalize">
-            Your Feed
-          </h1>
-          <p className="text-zinc-500">
-            Discover, analyze, and maximize your earnings on your predictions.
-          </p>
-        </div>
-
-        <div className="container mx-auto mt-8 px-4">
-          {isLoading ? (
-            <div className="flex h-64 items-center justify-center">
-              <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {markets.map((market) => (
-                <MarketCard key={market.id} market={market} />
-              ))}
-              {markets.length === 0 && (
-                <div className="col-span-full py-20 text-center text-zinc-500">
-                  No markets found matching your filters.
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+      <div className="container mx-auto mb-4 px-4 py-10">
+        <h1 className="mb-2 text-4xl font-bold tracking-tight text-white capitalize">
+          Your Feed
+        </h1>
+        <p className="text-zinc-500">
+          Discover, analyze, and maximize your earnings on your predictions.
+        </p>
       </div>
-    </main>
+
+      <div className="container mx-auto mt-8 px-4">
+        {isLoading ? (
+          <div className="flex h-64 items-center justify-center">
+            <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {markets.map((market) => (
+              <MarketCard key={market.id} market={market} />
+            ))}
+            {markets.length === 0 && (
+              <div className="col-span-full py-20 text-center text-zinc-500">
+                No markets found matching your filters.
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

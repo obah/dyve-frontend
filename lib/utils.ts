@@ -8,3 +8,10 @@ export function cn(...inputs: ClassValue[]) {
 export function pricesToPercentages(price: string): number {
   return Number(price) * 100;
 }
+
+export function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount);
+}
