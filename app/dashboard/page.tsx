@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { DashboardFilters } from "../../components/dashboard/DashboardFilters";
 import { MarketCard } from "../../components/dashboard/MarketCard";
 import { useGetEventsByCategory } from "@/hooks/useGetEventsByCategory";
-import { DashboardNavbar } from "../../components/navigation/DashboardNavbar";
 
 export default function Dashboard() {
   const [selectedCategory, setSelectedCategory] = useState("featured");

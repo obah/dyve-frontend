@@ -7,9 +7,13 @@ import { DashboardMenu } from "./DashboardMenu";
 import { formatCurrency } from "@/lib/utils";
 import { PlusIcon } from "lucide-react";
 import { PageLinks } from "@/lib/constants";
+import { LoginModal } from "../dashboard/auth/LoginModal";
+import { useConnection, useDisconnect } from "wagmi";
 
 export function DashboardNavbar() {
-  const [isConnected, setIsConnected] = useState<boolean>(false);
+  // const [isConnected, setIsConnected] = useState<boolean>(false);
+  const { isConnected } = useConnection();
+  const { disconnect } = useDisconnect();
 
   const balance = 100;
 
@@ -45,15 +49,16 @@ export function DashboardNavbar() {
                 Markets
               </Link>
 
-              <DashboardMenu onLogout={() => setIsConnected(false)} />
+              <DashboardMenu onLogout={disconnect} />
             </>
           ) : (
             <>
-              <Button variant={"outline"} onClick={() => setIsConnected(true)}>
+              {/* <Button variant={"outline"} onClick={() => setIsConnected(true)}>
                 Login
-              </Button>
+              </Button> */}
+              <LoginModal />
 
-              <Button onClick={() => setIsConnected(true)}>Sign up</Button>
+              <Button onClick={() => {}}>Sign up</Button>
             </>
           )}
         </div>

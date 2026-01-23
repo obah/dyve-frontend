@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import { QueryClientWrapper } from "@/providers/QueryClientWrapper";
+import { Web3Provider } from "@/components/Web3Provider";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -23,7 +23,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} bg-background text-foreground font-sans antialiased`}
       >
-        <QueryClientWrapper>{children}</QueryClientWrapper>
+        <Web3Provider>{children}</Web3Provider>
       </body>
     </html>
   );
